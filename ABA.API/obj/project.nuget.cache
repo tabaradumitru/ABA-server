@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "1k6Y4VYG4H96fnsWJEIetLw5Alr/APmdaL924F5hwYMXuMzxlowIBBCGMSxSV/qvStOfgJyIFtVIxHKQ7dhLLw==",
+  "success": true,
+  "projectFilePath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.API\\ABA.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tabar\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
