@@ -4,4 +4,9 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ABA.DataTransferObjects\ABA.DataTransferObjects.csproj" />
+      <ProjectReference Include="..\ABA.Persistence\ABA.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>

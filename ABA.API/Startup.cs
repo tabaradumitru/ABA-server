@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ABA.API.Config;
+using ABA.Persistence.ABA;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,10 +31,16 @@ namespace ABA.API
         {
 
             services.AddControllers();
+
+            services.AddDbContext<ABADbContext>(o => o
+                .UseMySQL(Configuration.GetConnectionString("ABA")));
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ABA.API", Version = "v1" });
             });
+            
+            services.AddABAServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

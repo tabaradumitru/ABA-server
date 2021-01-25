@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABA.DataTransferObjects", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABA.Application", "ABA.Application\ABA.Application.csproj", "{3E292016-BA3C-4BD0-A94C-922699D4284C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABA.Persistance", "ABA.Persistance\ABA.Persistance.csproj", "{E667BE7F-7AAA-4239-8459-BDF4A122A119}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABA.Persistence", "ABA.Persistence\ABA.Persistence.csproj", "{E667BE7F-7AAA-4239-8459-BDF4A122A119}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

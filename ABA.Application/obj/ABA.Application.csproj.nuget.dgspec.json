@@ -30,6 +30,70 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.DataTransferObjects\\ABA.DataTransferObjects.csproj": {
+                "projectPath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.DataTransferObjects\\ABA.DataTransferObjects.csproj"
+              },
+              "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Persistence\\ABA.Persistence.csproj": {
+                "projectPath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Persistence\\ABA.Persistence.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.DataTransferObjects\\ABA.DataTransferObjects.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.DataTransferObjects\\ABA.DataTransferObjects.csproj",
+        "projectName": "ABA.DataTransferObjects",
+        "projectPath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.DataTransferObjects\\ABA.DataTransferObjects.csproj",
+        "packagesPath": "C:\\Users\\tabar\\.nuget\\packages\\",
+        "outputPath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.DataTransferObjects\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\tabar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -42,6 +106,79 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Persistence\\ABA.Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Persistence\\ABA.Persistence.csproj",
+        "projectName": "ABA.Persistence",
+        "projectPath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Persistence\\ABA.Persistence.csproj",
+        "packagesPath": "C:\\Users\\tabar\\.nuget\\packages\\",
+        "outputPath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Persistence\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\tabar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.0-m8.0.23, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

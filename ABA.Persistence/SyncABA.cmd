@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=aba;User=dumitrutabara;Password=1317;" MySql.EntityFrameworkCore -o ABA/Entities --context-dir ABA -c ABADbContext --force -s ../ABA.API
