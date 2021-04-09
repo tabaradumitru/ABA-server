@@ -1,0 +1,15 @@
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\bin\Debug\net5.0\ABA.Persistence.deps.json
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\bin\Debug\net5.0\ABA.Persistence.runtimeconfig.json
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\bin\Debug\net5.0\ABA.Persistence.runtimeconfig.dev.json
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\bin\Debug\net5.0\ABA.Persistence.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\bin\Debug\net5.0\ref\ABA.Persistence.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\bin\Debug\net5.0\ABA.Persistence.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.csprojAssemblyReference.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.AssemblyInfoInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.AssemblyInfo.cs
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.csproj.CoreCompileInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ref\ABA.Persistence.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Persistence\obj\Debug\net5.0\ABA.Persistence.genruntimeconfig.cache

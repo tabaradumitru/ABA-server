@@ -12,3 +12,7 @@ D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp
 D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp3.1\ABA.DataTransferObjects.pdb
 D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp3.1\ABA.Persistence.pdb
 D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\obj\Debug\netcoreapp3.1\ABA.Application.csproj.CopyComplete
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp3.1\ABA.Models.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp3.1\ABA.Models.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp3.1\ABA.Utilities.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Application\bin\Debug\netcoreapp3.1\ABA.Utilities.pdb

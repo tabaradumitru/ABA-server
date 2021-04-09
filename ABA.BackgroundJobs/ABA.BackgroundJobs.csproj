@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ABA.DataTransferObjects\ABA.DataTransferObjects.csproj" />
+        <ProjectReference Include="..\ABA.Models\ABA.Models.csproj" />
+        <ProjectReference Include="..\ABA.Application\ABA.Application.csproj" />
+        <ProjectReference Include="..\ABA.Utilities\ABA.Utilities.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,9 @@
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\bin\Debug\netcoreapp3.1\ABA.Models.deps.json
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\bin\Debug\netcoreapp3.1\ABA.Models.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\bin\Debug\netcoreapp3.1\ABA.Models.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\obj\Debug\netcoreapp3.1\ABA.Models.csprojAssemblyReference.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\obj\Debug\netcoreapp3.1\ABA.Models.AssemblyInfoInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\obj\Debug\netcoreapp3.1\ABA.Models.AssemblyInfo.cs
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\obj\Debug\netcoreapp3.1\ABA.Models.csproj.CoreCompileInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\obj\Debug\netcoreapp3.1\ABA.Models.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Models\obj\Debug\netcoreapp3.1\ABA.Models.pdb

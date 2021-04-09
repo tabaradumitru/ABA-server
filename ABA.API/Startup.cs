@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using ABA.API.Config;
+using ABA.Models.Configuration;
 using ABA.Persistence.ABA;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace ABA.API
@@ -30,17 +27,37 @@ namespace ABA.API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddMvc();
             services.AddControllers();
-
+            
             services.AddDbContext<ABADbContext>(o => o
                 .UseMySQL(Configuration.GetConnectionString("ABA")));
             
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ABA.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Access to the border area.API", Version = "v1" });
             });
             
-            services.AddABAServices();
+            services.Configure<AuthorizationConfiguration>(Configuration.GetSection("Authorization"));
+
+            services.AddServices();
+            services.AddHttpContextAccessor();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        RequireExpirationTime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authorization:SecretKey"])),
+                        ValidIssuer = Configuration["Authorization:Issuer"],
+                        ValidateIssuer = true,
+                        ValidAudience = Configuration["Authorization:Audience"],
+                        ValidateAudience = true
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,18 +67,25 @@ namespace ABA.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ABA.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Access to the border area.API v1"));
             }
 
             app.UseHttpsRedirection();
+            // app.UseSpaStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            
+            app.UseSpa(spa =>
+            {
+                if (env.IsDevelopment()) spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
             });
         }
     }

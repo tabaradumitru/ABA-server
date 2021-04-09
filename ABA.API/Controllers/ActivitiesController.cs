@@ -2,17 +2,19 @@
 using System.Threading.Tasks;
 using ABA.Application.Activity.Services;
 using ABA.DataTransferObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ABA.API.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("[controller]")]
-    public class ActivityController: ControllerBase
+    [Route("api/[controller]")]
+    public class ActivitiesController: ControllerBase
     {
         private readonly IActivityService _activityService;
 
-        public ActivityController(IActivityService activityService)
+        public ActivitiesController(IActivityService activityService)
         {
             _activityService = activityService;
         }

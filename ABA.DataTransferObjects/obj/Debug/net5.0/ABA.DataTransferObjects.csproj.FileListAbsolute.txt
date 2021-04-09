@@ -1,0 +1,15 @@
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\bin\Debug\net5.0\ABA.DataTransferObjects.deps.json
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\bin\Debug\net5.0\ABA.DataTransferObjects.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\bin\Debug\net5.0\ref\ABA.DataTransferObjects.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\bin\Debug\net5.0\ABA.DataTransferObjects.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.csprojAssemblyReference.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.GeneratedMSBuildEditorConfig.editorconfig
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.AssemblyInfoInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.AssemblyInfo.cs
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.csproj.CoreCompileInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ref\ABA.DataTransferObjects.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\bin\Debug\net5.0\ABA.Models.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\bin\Debug\net5.0\ABA.Models.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.DataTransferObjects\obj\Debug\net5.0\ABA.DataTransferObjects.csproj.CopyComplete

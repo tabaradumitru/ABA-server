@@ -1,0 +1,12 @@
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\bin\Debug\net5.0\ABA.Utilities.deps.json
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\bin\Debug\net5.0\ABA.Utilities.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\bin\Debug\net5.0\ref\ABA.Utilities.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\bin\Debug\net5.0\ABA.Utilities.pdb
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.csprojAssemblyReference.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.AssemblyInfoInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.AssemblyInfo.cs
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.csproj.CoreCompileInputs.cache
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ref\ABA.Utilities.dll
+D:\university\ProiectLicenta\ABA\ABA-server\ABA.Utilities\obj\Debug\net5.0\ABA.Utilities.pdb

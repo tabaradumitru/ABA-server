@@ -21,8 +21,9 @@ namespace ABA.Application.Activity.Services.Implementations
             return await _abaDbContext.Activities
                 .Select(a => new ActivityDto
                 {
-                    Id = a.Id,
-                    Name = a.Name
+                    ActivityId = a.ActivityId,
+                    ActivityName = a.ActivityName,
+                    RequiresLicense = a.RequiresLicense == 1
                 })
                 .ToListAsync();
         }
