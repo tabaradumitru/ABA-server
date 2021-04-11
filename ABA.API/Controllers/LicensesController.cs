@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ABA.Application.License.Services;
 using ABA.DataTransferObjects;
+using ABA.DataTransferObjects.License;
+using ABA.DataTransferObjects.Request;
+using ABA.Models.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,22 +24,70 @@ namespace ABA.API.Controllers
             _licenseService = licenseService;
         }
 
-        [HttpGet]
-        public async Task<List<LicenseDto>> GetLicenses()
+        #region Employee Endpoints
+
+        [Authorize(Roles = "Employee")]
+        [HttpGet("all-licenses")]
+        public PaginatedResponse<List<LicenseDto>> GetLicenses([FromQuery] LicenseFilterDto filter)
         {
-            return new List<LicenseDto>();
+            return _licenseService.GetLicenses(filter);
         }
 
+        [Authorize(Roles = "Employee")]
         [HttpPost]
-        public async Task<int> PostLicense()
+        public async Task<IActionResult> PostLicense([FromBody] RequestIdDto requestIdDto)
         {
-            return 0;
+            var idnp = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var response = await _licenseService.CreateLicense(requestIdDto.RequestId, idnp);
+            
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.BadRequest: return BadRequest(response);
+                case HttpStatusCode.InternalServerError: return BadRequest(response);
+                case HttpStatusCode.NotFound: return NotFound(response);
+                default: return Ok(response.Content);
+            }
         }
 
-        [HttpGet("{licenseId:int}")]
-        public async Task<LicenseDto> GetLicense(int licenseId)
+        #endregion
+        
+        #region User Endpoints
+
+        [Authorize(Roles = "User")]
+        [HttpGet]
+        public PaginatedResponse<List<LicenseDto>> GetUserLicenses([FromQuery] LicenseFilterDto filter)
         {
-            return new LicenseDto();
+            filter.CitizenIdnp = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return _licenseService.GetUserLicenses(filter);
         }
+
+        [Authorize(Roles = "User")]
+        [HttpGet("{licenseId:int}")]
+        public async Task<IActionResult> GetLicense(int licenseId)
+        {
+            var response = await _licenseService.GetLicense(licenseId);
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.BadRequest: return BadRequest(response);
+                case HttpStatusCode.InternalServerError: return BadRequest(response);
+                case HttpStatusCode.NotFound: return NotFound(response);
+                default: return Ok(response.Content);
+            }
+        }
+
+        #endregion
+        
+        #region Other Endpoints
+
+        [HttpGet("statuses")]
+        public async Task<List<LicenseStatusDto>> GetLicenseStatuses()
+        {
+            return await _licenseService.GetLicenseStatuses();
+        }
+
+        #endregion
     }
 }

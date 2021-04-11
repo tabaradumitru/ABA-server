@@ -14,4 +14,17 @@
         public const string User = "User";
         public const string Employee = "Employee";
     }
+
+    public enum LicenseStatuses
+    {
+        Active = 1,
+        Expired = 2,
+        Canceled = 3
+    }
+
+    public enum ReceivingMethods
+    {
+        SMS = 1,
+        Email = 2
+    }
 }

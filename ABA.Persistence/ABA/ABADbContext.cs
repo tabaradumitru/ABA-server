@@ -26,6 +26,8 @@ namespace ABA.Persistence.ABA
         public virtual DbSet<EmployeeTitle> EmployeeTitles { get; set; }
         public virtual DbSet<License> Licenses { get; set; }
         public virtual DbSet<LicenseLocality> LicenseLocalities { get; set; }
+        public virtual DbSet<LicenseReceivingMethod> LicenseReceivingMethods { get; set; }
+        public virtual DbSet<LicenseStatus> LicenseStatuses { get; set; }
         public virtual DbSet<Locality> Localities { get; set; }
         public virtual DbSet<MconnectValidation> MconnectValidations { get; set; }
         public virtual DbSet<PoliceSector> PoliceSectors { get; set; }
@@ -33,7 +35,6 @@ namespace ABA.Persistence.ABA
         public virtual DbSet<RegionalDirection> RegionalDirections { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<RequestLocality> RequestLocalities { get; set; }
-        public virtual DbSet<RequestMconnectValidation> RequestMconnectValidations { get; set; }
         public virtual DbSet<RequestReceivingMethod> RequestReceivingMethods { get; set; }
         public virtual DbSet<RequestStatus> RequestStatuses { get; set; }
         public virtual DbSet<ValidationType> ValidationTypes { get; set; }
@@ -160,6 +161,8 @@ namespace ABA.Persistence.ABA
 
                 entity.HasIndex(e => e.EmployeeIdnp, "license_employee_EmployeeIDNP_fk");
 
+                entity.HasIndex(e => e.StatusId, "license_license_status_StatusId_fk");
+
                 entity.HasIndex(e => e.RequestId, "license_request_RequestId_fk");
 
                 entity.Property(e => e.CitizenIdnp)
@@ -180,7 +183,11 @@ namespace ABA.Persistence.ABA
                     .IsRequired()
                     .HasMaxLength(20);
 
+                entity.Property(e => e.Note).HasMaxLength(2000);
+
                 entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.Property(e => e.StatusId).HasDefaultValueSql("'1'");
 
                 entity.HasOne(d => d.Activity)
                     .WithMany(p => p.Licenses)
@@ -205,6 +212,12 @@ namespace ABA.Persistence.ABA
                     .HasForeignKey(d => d.RequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("license_request_RequestId_fk");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Licenses)
+                    .HasForeignKey(d => d.StatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("license_license_status_StatusId_fk");
             });
 
             modelBuilder.Entity<LicenseLocality>(entity =>
@@ -228,6 +241,43 @@ namespace ABA.Persistence.ABA
                     .HasConstraintName("license_locality_locality_LocalityId_fk");
             });
 
+            modelBuilder.Entity<LicenseReceivingMethod>(entity =>
+            {
+                entity.ToTable("license_receiving_method");
+
+                entity.HasIndex(e => e.LicenseId, "license_receiving_method_license_LicenseId_fk");
+
+                entity.HasIndex(e => e.ReceivingMethodId, "license_receiving_method_receiving_method_ReceivingMethodId_fk");
+
+                entity.Property(e => e.ReceivingMethodValue)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.License)
+                    .WithMany(p => p.LicenseReceivingMethods)
+                    .HasForeignKey(d => d.LicenseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("license_receiving_method_license_LicenseId_fk");
+
+                entity.HasOne(d => d.ReceivingMethod)
+                    .WithMany(p => p.LicenseReceivingMethods)
+                    .HasForeignKey(d => d.ReceivingMethodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("license_receiving_method_receiving_method_ReceivingMethodId_fk");
+            });
+
+            modelBuilder.Entity<LicenseStatus>(entity =>
+            {
+                entity.HasKey(e => e.StatusId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("license_status");
+
+                entity.Property(e => e.StatusName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Locality>(entity =>
             {
                 entity.ToTable("locality");
@@ -249,11 +299,19 @@ namespace ABA.Persistence.ABA
             {
                 entity.ToTable("mconnect_validation");
 
+                entity.HasIndex(e => e.RequestId, "mconnect_validation_request_RequestId_fk");
+
                 entity.HasIndex(e => e.ValidationTypeId, "mconnect_validation_validation_type_ValidationTypeId_fk");
 
                 entity.Property(e => e.ValidationValue)
                     .IsRequired()
                     .HasMaxLength(1000);
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.MconnectValidations)
+                    .HasForeignKey(d => d.RequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("mconnect_validation_request_RequestId_fk");
 
                 entity.HasOne(d => d.ValidationType)
                     .WithMany(p => p.MconnectValidations)
@@ -324,8 +382,6 @@ namespace ABA.Persistence.ABA
 
                 entity.Property(e => e.Note).HasMaxLength(2000);
 
-                entity.Property(e => e.Phone).HasMaxLength(8);
-
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
                 entity.HasOne(d => d.Activity)
@@ -366,27 +422,6 @@ namespace ABA.Persistence.ABA
                     .HasForeignKey(d => d.RequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("request_locality_request_RequestId_fk");
-            });
-
-            modelBuilder.Entity<RequestMconnectValidation>(entity =>
-            {
-                entity.ToTable("request_mconnect_validation");
-
-                entity.HasIndex(e => e.MconnectValidationId, "request_mconnect_validation_mconnect_MconnectValidationId_fk");
-
-                entity.HasIndex(e => e.RequestId, "request_mconnect_validation_request_RequestId_fk");
-
-                entity.HasOne(d => d.MconnectValidation)
-                    .WithMany(p => p.RequestMconnectValidations)
-                    .HasForeignKey(d => d.MconnectValidationId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("request_mconnect_validation_mconnect_MconnectValidationId_fk");
-
-                entity.HasOne(d => d.Request)
-                    .WithMany(p => p.RequestMconnectValidations)
-                    .HasForeignKey(d => d.RequestId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("request_mconnect_validation_request_RequestId_fk");
             });
 
             modelBuilder.Entity<RequestReceivingMethod>(entity =>

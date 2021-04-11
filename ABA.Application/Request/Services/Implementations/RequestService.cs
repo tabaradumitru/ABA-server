@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ABA.DataTransferObjects.Request;
+using ABA.DataTransferObjects.Validation;
 using ABA.Models.Constants;
 using ABA.Models.Wrappers;
 using ABA.Persistence.ABA;
@@ -36,84 +37,68 @@ namespace ABA.Application.Request.Services.Implementations
 
         #endregion
 
-        #region Get Requests
-
-        public async Task<PaginatedResponse<List<RequestDto>>> GetRequests(RequestFilter requestFilter)
+        public PaginatedResponse<List<RequestDto>> GetRequests(RequestFilterDto filter)
         {
             var response = new PaginatedResponse<List<RequestDto>>();
 
             // TODO: check request object
 
             // create query
-            var query = _abaDbContext.Requests
-                .Include(r => r.CitizenIdnpNavigation)
-                .Include(r => r.RequestReceivingMethods)
-                    .ThenInclude(r => r.ReceivingMethod)
-                .Include(r => r.RequestLocalities)
-                    .ThenInclude(rl => rl.Locality)
-                    .ThenInclude(rl => rl.District)
-                    .ThenInclude(rl => rl.Area)
-                .AsQueryable();
+            var query = GetRequestsQuery();
 
-            ApplyFilter(ref query, requestFilter);
-            ApplyOrderBy(ref query, requestFilter);
+            ApplyFilter(ref query, filter);
+            ApplyOrderBy(ref query, filter);
 
-            // get data as .ToPagedList
-            var requests = PagedList<Persistence.ABA.Entities.Request>.ToPagedList(query, requestFilter.Page, requestFilter.PageSize);
+            var requests = PagedList<Persistence.ABA.Entities.Request>.ToPagedList(query, filter.Page, filter.PageSize);
             
             // map data correctly
-            if (requests.Any())
-            {
-                response.Content = requests
-                    .Select(r => new RequestDto
-                    {
-                        RequestId = r.RequestId,
-                        CitizenIdnp = r.CitizenIdnp,
-                        FirstName = r.CitizenIdnpNavigation.FirstName,
-                        LastName = r.CitizenIdnpNavigation.LastName,
-                        ActivityId = r.ActivityId,
-                        StartDate = r.StartDate,
-                        EndDate = r.EndDate,
-                        CreatedAt = r.CreatedAt,
-                        StatusId = r.StatusId,
-                        Phone = r.Phone,
-                        Note = r.Note,
-                        ReceivingMethods = r.RequestReceivingMethods
-                            .Select(rrm => new ReceivingMethodDto
-                            {
-                                ReceivingMethodId = rrm.ReceivingMethodId,
-                                ReceivingMethodName = rrm.ReceivingMethod.ReceivingMethodName,
-                                ReceivingMethodValue = rrm.ReceivingMethodValue
-                            })
-                            .ToList(),
-                        NotifyExpiry = false,
-                        Areas = r.RequestLocalities
-                            .Select(l => l.Locality.District.Area.AreaId)
-                            .Distinct()
-                            .ToList(),
-                        Districts = r.RequestLocalities
-                            .Select(l => l.Locality.District.DistrictId)
-                            .Distinct()
-                            .ToList(),
-                        Localities = r.RequestLocalities
-                            .Select(l => l.LocalityId)
-                            .ToList()
-                    })
-                    .ToList();
-                response.CurrentPage = requests.CurrentPage;
-                response.PageSize = requests.PageSize;
-                response.TotalCount = requests.TotalCount;
-                response.TotalPages = requests.TotalPages;
-            }
+            if (!requests.Any()) return response;
             
+            response.Content = requests
+                .Select(r => new RequestDto
+                {
+                    RequestId = r.RequestId,
+                    CitizenIdnp = r.CitizenIdnp,
+                    FirstName = r.CitizenIdnpNavigation.FirstName,
+                    LastName = r.CitizenIdnpNavigation.LastName,
+                    ActivityId = r.ActivityId,
+                    StartDate = r.StartDate,
+                    EndDate = r.EndDate,
+                    CreatedAt = r.CreatedAt,
+                    StatusId = r.StatusId,
+                    Note = r.Note,
+                    NotifyExpiry = r.NotifyExpiry,
+                    ReceivingMethods = r.RequestReceivingMethods
+                        .Select(rrm => new ReceivingMethodDto
+                        {
+                            ReceivingMethodId = rrm.ReceivingMethodId,
+                            ReceivingMethodName = rrm.ReceivingMethod.ReceivingMethodName,
+                            ReceivingMethodValue = rrm.ReceivingMethodValue
+                        })
+                        .ToList(),
+                    Areas = r.RequestLocalities
+                        .Select(l => l.Locality.District.Area.AreaId)
+                        .Distinct()
+                        .ToList(),
+                    Districts = r.RequestLocalities
+                        .Select(l => l.Locality.District.DistrictId)
+                        .Distinct()
+                        .ToList(),
+                    Localities = r.RequestLocalities
+                        .Select(l => l.LocalityId)
+                        .ToList()
+                })
+                .ToList();
+            
+            response.CurrentPage = requests.CurrentPage;
+            response.PageSize = requests.PageSize;
+            response.TotalCount = requests.TotalCount;
+            response.TotalPages = requests.TotalPages;
+
             return response;
         }
 
-        #endregion
-
-        #region Add Request
-
-        public async Task<Response<int>> AddRequest(RequestDto request)
+        public async Task<Response<int>> AddRequest(RequestToAddDto request)
         {
             // TODO: validate user data in mConnect
 
@@ -131,9 +116,27 @@ namespace ABA.Application.Request.Services.Implementations
                 EndDate = request.EndDate,
                 CreatedAt = DateTime.Now,
                 StatusId = (int)RequestStatuses.Active,
-                Phone = request.Phone,
-                Note = request.Note
+                NotifyExpiry = request.NotifyExpiry,
+                Note = request.Note,
+                RequestReceivingMethods = new List<RequestReceivingMethod>
+                {
+                    new RequestReceivingMethod
+                    {
+                        ReceivingMethodId = (int)ReceivingMethods.SMS,
+                        ReceivingMethodValue = request.Phone
+                    }
+                }
             };
+
+            if (!string.IsNullOrWhiteSpace(request.Email))
+            {
+                requestToAdd.RequestReceivingMethods.Add(new RequestReceivingMethod
+                {
+                    ReceivingMethodId = (int)ReceivingMethods.Email,
+                    ReceivingMethodValue = request.Email
+                });
+            }
+            
 
             var requestLocalities = request.Localities
                 .Select(l => new RequestLocality
@@ -161,40 +164,25 @@ namespace ABA.Application.Request.Services.Implementations
             return response;
         }
 
-        #endregion
-
-        #region Get Requests
-
-        public async Task<Response<List<RequestDto>>> GetRequests(string idnp)
+        public PaginatedResponse<List<RequestDto>> GetUserRequests(RequestFilterDto filter)
         {
-            var response = new Response<List<RequestDto>>();
-
-            if (string.IsNullOrWhiteSpace(idnp))
+            var response = new PaginatedResponse<List<RequestDto>>();
+            
+            if (string.IsNullOrWhiteSpace(filter.CitizenIdnp))
             {
                 response.Errors.Add("IDNP-ul nu este valid!");
                 response.StatusCode = HttpStatusCode.BadRequest;
                 return response;
             }
 
-            var citizen = await _abaDbContext.Citizens
-                .Include(c => c.Requests)
-                .ThenInclude(c => c.RequestLocalities)
-                .ThenInclude(c => c.Locality)
-                .ThenInclude(c => c.District)
-                .ThenInclude(c => c.Area)
-                .Include(c => c.Requests)
-                    .ThenInclude(c => c.RequestReceivingMethods)
-                    .ThenInclude(c => c.ReceivingMethod)
-                .FirstOrDefaultAsync(c => EF.Functions.Like(c.CitizenIdnp, idnp));
+            var query = GetRequestsQuery();
+            
+            ApplyFilter(ref query, filter);
+            ApplyOrderBy(ref query, filter);
+            
+            var requests = PagedList<Persistence.ABA.Entities.Request>.ToPagedList(query, filter.Page, filter.PageSize);
 
-            if (citizen == null)
-            {
-                response.Errors.Add("IDNP-ul nu a fost găsit!");
-                response.StatusCode = HttpStatusCode.NotFound;
-                return response;
-            }
-
-            response.Content = citizen.Requests
+            response.Content = requests
                 .Select(r => new RequestDto
                 {
                     RequestId = r.RequestId,
@@ -204,7 +192,6 @@ namespace ABA.Application.Request.Services.Implementations
                     EndDate = r.EndDate,
                     CreatedAt = r.CreatedAt,
                     StatusId = r.StatusId,
-                    Phone = r.Phone,
                     Note = r.Note,
                     ReceivingMethods = r.RequestReceivingMethods
                         .Select(rrm => new ReceivingMethodDto
@@ -214,7 +201,7 @@ namespace ABA.Application.Request.Services.Implementations
                             ReceivingMethodValue = rrm.ReceivingMethodValue
                         })
                         .ToList(),
-                    NotifyExpiry = false,
+                    NotifyExpiry = r.NotifyExpiry,
                     Areas = r.RequestLocalities
                         .Select(l => l.Locality.District.Area.AreaId)
                         .Distinct()
@@ -227,18 +214,19 @@ namespace ABA.Application.Request.Services.Implementations
                         .Select(l => l.LocalityId)
                         .ToList()
                 })
-                .OrderByDescending(r => r.CreatedAt)
                 .ToList();
-            response.StatusCode = HttpStatusCode.OK;
+            
+            response.CurrentPage = requests.CurrentPage;
+            response.PageSize = requests.PageSize;
+            response.TotalCount = requests.TotalCount;
+            response.TotalPages = requests.TotalPages;
 
             return response;
         }
 
-        #endregion
-
-        public async Task<Response<RequestDto>> GetRequestPreview(int requestId)
+        public async Task<Response<RequestToValidateDto>> GetRequestPreview(int requestId)
         {
-            var response = new Response<RequestDto>();
+            var response = new Response<RequestToValidateDto>();
 
             response.Content = await _abaDbContext.Requests
                 .Include(r => r.CitizenIdnpNavigation)
@@ -248,7 +236,7 @@ namespace ABA.Application.Request.Services.Implementations
                     .ThenInclude(rl => rl.Locality)
                     .ThenInclude(rl => rl.District)
                     .ThenInclude(rl => rl.Area)
-                .Select(r => new RequestDto
+                .Select(r => new RequestToValidateDto
                 {
                     RequestId = r.RequestId,
                     CitizenIdnp = r.CitizenIdnp,
@@ -259,7 +247,7 @@ namespace ABA.Application.Request.Services.Implementations
                     EndDate = r.EndDate,
                     CreatedAt = r.CreatedAt,
                     StatusId = r.StatusId,
-                    Phone = r.Phone,
+                    NotifyExpiry = r.NotifyExpiry,
                     Note = r.Note,
                     ReceivingMethods = r.RequestReceivingMethods
                         .Select(rrm => new ReceivingMethodDto
@@ -269,7 +257,6 @@ namespace ABA.Application.Request.Services.Implementations
                             ReceivingMethodValue = rrm.ReceivingMethodValue
                         })
                         .ToList(),
-                    NotifyExpiry = false,
                     Areas = r.RequestLocalities
                         .Select(l => l.Locality.District.Area.AreaId)
                         .ToList(),
@@ -284,16 +271,37 @@ namespace ABA.Application.Request.Services.Implementations
 
             if (response.Content == null)
             {
-                response.Errors.Add("Request could not be found!");
+                response.Errors.Add("Cererea nu a putut fi găsită!");
                 response.StatusCode = HttpStatusCode.NotFound;
                 return response;
             }
+
+            var validations = await _abaDbContext.MconnectValidations
+                .Include(m => m.ValidationType)
+                .Where(m => m.RequestId == requestId)
+                .Select(m => new
+                {
+                    m.ValidationTypeId,
+                    m.ValidationType.ValidationTypeName,
+                    m.ValidationValue
+                })
+                .ToListAsync();
+
+            response.Content.MconnectValidations = validations
+                .GroupBy(v => new { v.ValidationTypeId, v.ValidationTypeName })
+                .Select(v => new MconnectValidationDto
+                {
+                    ValidationTypeId = v.Key.ValidationTypeId,
+                    ValidationTypeName = v.Key.ValidationTypeName,
+                    ValidationValues = v.Select(x => x.ValidationValue).ToList()
+                })
+                .ToList();
 
             response.StatusCode = HttpStatusCode.OK;
             return response;
         }
 
-        private Response<int> ValidateRequestToAdd(RequestDto request)
+        private Response<int> ValidateRequestToAdd(RequestToAddDto request)
         {
             var response = new Response<int>();
 
@@ -332,13 +340,7 @@ namespace ABA.Application.Request.Services.Implementations
                 response.Errors.Add("Data de sfârșit nu este validă");
                 response.StatusCode = HttpStatusCode.BadRequest;
             }
-
-            if (!request.ReceivingMethods.Any())
-            {
-                response.Errors.Add("Nu ați specificat nici o metodă de primire a permisului!");
-                response.StatusCode = HttpStatusCode.BadRequest;
-            }
-
+            
             if (!request.PersonalDataAgreement)
             {
                 response.Errors.Add("Nu sunteți de acord cu prelucrarea datelor personale!");
@@ -360,7 +362,7 @@ namespace ABA.Application.Request.Services.Implementations
             return response;
         }
 
-        public async Task<Response<int>> ValidateDatabaseRequestData(RequestDto request)
+        private async Task<Response<int>> ValidateDatabaseRequestData(RequestToAddDto request)
         {
             var response = new Response<int>();
 
@@ -391,49 +393,56 @@ namespace ABA.Application.Request.Services.Implementations
             return response;
         }
 
-        private void ApplyFilter(ref IQueryable<Persistence.ABA.Entities.Request> query, RequestFilter requestFilter)
+        private IQueryable<Persistence.ABA.Entities.Request> GetRequestsQuery()
         {
-            
+            return _abaDbContext.Requests
+                .Include(r => r.CitizenIdnpNavigation)
+                .Include(r => r.RequestReceivingMethods)
+                    .ThenInclude(rm => rm.ReceivingMethod)
+                .Include(r => r.RequestLocalities)
+                    .ThenInclude(rl => rl.Locality)
+                    .ThenInclude(rl => rl.District)
+                    .ThenInclude(rl => rl.Area)
+                .AsQueryable();
         }
 
-        private void ApplyOrderBy(ref IQueryable<Persistence.ABA.Entities.Request> query, RequestFilter requestFilter)
+        private void ApplyFilter(ref IQueryable<Persistence.ABA.Entities.Request> query, RequestFilterDto filter)
         {
-            var orderBy = requestFilter.SortField ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(filter.CitizenIdnp))
+                query = query.Where(q => EF.Functions.Like(q.CitizenIdnp, $"%{filter.CitizenIdnp}%"));
+        }
 
-            switch (orderBy.Trim().ToLowerInvariant())
+        private void ApplyOrderBy(ref IQueryable<Persistence.ABA.Entities.Request> query, RequestFilterDto filter)
+        {
+            var sortField = filter.SortField ?? string.Empty;
+
+            switch (sortField.Trim().ToLowerInvariant())
             {
                 case "activity-name":
-                    if (requestFilter.SortOrder == 1)
+                    if (filter.SortOrder == 1)
                         query = query.OrderBy(x => x.Activity.ActivityName);
-                    if (requestFilter.SortOrder == -1)
+                    if (filter.SortOrder == -1)
                         query = query.OrderByDescending(x => x.Activity.ActivityName);
                     break;
-                
-                case "phone":
-                    if (requestFilter.SortOrder == 1)
-                        query = query.OrderBy(x => x.Phone);
-                    if (requestFilter.SortOrder == -1)
-                        query = query.OrderByDescending(x => x.Phone);
-                    break;
-                
+
                 case "start-date":
-                    if (requestFilter.SortOrder == 1)
+                    if (filter.SortOrder == 1)
                         query = query.OrderBy(x => x.StartDate);
-                    if (requestFilter.SortOrder == -1)
+                    if (filter.SortOrder == -1)
                         query = query.OrderByDescending(x => x.StartDate);
                     break;
                     
                 case "end-date":
-                    if (requestFilter.SortOrder == 1)
+                    if (filter.SortOrder == 1)
                         query = query.OrderBy(x => x.EndDate);
-                    if (requestFilter.SortOrder == -1)
+                    if (filter.SortOrder == -1)
                         query = query.OrderByDescending(x => x.EndDate);
                     break;
                 
                 case "status-name":
-                    if (requestFilter.SortOrder == 1)
+                    if (filter.SortOrder == 1)
                         query = query.OrderBy(x => x.Status.StatusName);
-                    if (requestFilter.SortOrder == -1)
+                    if (filter.SortOrder == -1)
                         query = query.OrderByDescending(x => x.Status.StatusName);
                     break;
                 

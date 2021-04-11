@@ -13,7 +13,7 @@ namespace ABA.DataTransferObjects.Request
         public DateTime EndDate { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int StatusId { get; set; }
-        public string Phone { get; set; }
+        public byte NotifyExpiry { get; set; }
         public string Note { get; set; }
     }
 }

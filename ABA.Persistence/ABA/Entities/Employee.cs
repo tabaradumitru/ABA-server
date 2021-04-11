@@ -17,6 +17,7 @@ namespace ABA.Persistence.ABA.Entities
         public int PoliceSectorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public byte IsActive { get; set; }
 
         public virtual EmployeeTitle EmployeeTitle { get; set; }
         public virtual ICollection<License> Licenses { get; set; }

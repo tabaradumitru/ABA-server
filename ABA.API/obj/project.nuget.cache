@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1qyLCpN8MR4dpUY9azoY6AZg7gdIlfV0nhEvOwLxT+YjIQcozbCBi08OwLy2cY0m/96/4jOnmOOUlVfXEKkVpw==",
+  "dgSpecHash": "MRfrD6LvCWqWXCMyGhhnqDVeeec0/By0Nx/T6bocbVmdys78Q0BfGMh+p4odxV49bJTkHL8329dhBvDNTeag/g==",
   "success": true,
   "projectFilePath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.API\\ABA.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\tabar\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\google.protobuf\\3.11.4\\google.protobuf.3.11.4.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
@@ -68,6 +70,7 @@
     "C:\\Users\\tabar\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.10.0\\system.identitymodel.tokens.jwt.6.10.0.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.4.0\\system.security.cryptography.protecteddata.4.4.0.nupkg.sha512",

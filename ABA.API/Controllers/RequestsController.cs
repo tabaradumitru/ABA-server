@@ -22,35 +22,20 @@ namespace ABA.API.Controllers
             _requestService = requestService;
         }
 
-        // [Authorize(Roles = "User")]
-        // [HttpGet]
-        // public async Task<IActionResult> GetRequests()
-        // {
-        //     var idnp = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        //
-        //     var response = await _requestService.GetRequests(idnp);
-        //     
-        //     switch (response.StatusCode)
-        //     {
-        //         case HttpStatusCode.BadRequest: return BadRequest(response);
-        //         case HttpStatusCode.InternalServerError: return BadRequest(response);
-        //         case HttpStatusCode.NotFound: return NotFound(response);
-        //         default: return Ok(response.Content);
-        //     }
-        // }
+        #region Employee Endpoints
 
         [Authorize(Roles = "Employee")]
         [HttpGet("all-requests")]
-        public async Task<PaginatedResponse<List<RequestDto>>> GetRequests([FromQuery] RequestFilter requestFilter)
+        public PaginatedResponse<List<RequestDto>> GetRequests([FromQuery] RequestFilterDto filter)
         {
-            return await _requestService.GetRequests(requestFilter);
+            return _requestService.GetRequests(filter);
         }
-
+        
         [Authorize(Roles = "Employee")]
-        [HttpGet("{idnp}")]
-        public async Task<IActionResult> GetRequests(string idnp)
+        [HttpGet("preview/{requestId:int}")]
+        public async Task<IActionResult> GetRequest(int requestId)
         {
-            var response = await _requestService.GetRequests(idnp);
+            var response = await _requestService.GetRequestPreview(requestId);
             
             switch (response.StatusCode)
             {
@@ -61,9 +46,22 @@ namespace ABA.API.Controllers
             }
         }
 
+        #endregion
+
+        #region User Endpoints
+
+        [Authorize(Roles = "User")]
+        [HttpGet]
+        public PaginatedResponse<List<RequestDto>> GetUserRequests([FromQuery] RequestFilterDto filter)
+        {
+            filter.CitizenIdnp = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
+            return _requestService.GetUserRequests(filter);
+        }
+        
         [Authorize(Roles = "User")]
         [HttpPost]
-        public async Task<IActionResult> PostRequest(RequestDto request)
+        public async Task<IActionResult> CreateRequest(RequestToAddDto request)
         {
             var idnp = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             request.CitizenIdnp = idnp;
@@ -79,43 +77,43 @@ namespace ABA.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Employee")]
-        [HttpGet("preview/{requestId:int}")]
-        public async Task<IActionResult> GetRequest(int requestId)
-        {
-            var response = await _requestService.GetRequestPreview(requestId);
-            
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.BadRequest: return BadRequest(response);
-                case HttpStatusCode.InternalServerError: return BadRequest(response);
-                case HttpStatusCode.NotFound: return NotFound(response);
-                default: return Ok(response.Content);
-            }
-        }
-        
-        [HttpPut("{requestId:int}")]
-        public async Task<RequestDto> PutRequest(int requestId, RequestDto request)
-        {
-            return new RequestDto();
-        }
-        
-        [HttpPatch("{requestId:int}/cancel")]
-        public async Task CancelRequest(int requestId)
-        {
-            return;
-        }
+        #endregion
 
-        [HttpDelete("{requestId:int}")]
-        public async Task DeleteRequest(int requestId)
-        {
-            return;
-        }
+        #region Other Endpoints
 
         [HttpGet("statuses")]
         public async Task<List<RequestStatusDto>> GetStatuses()
         {
             return await _requestService.GetStatuses();
         }
+
+        #endregion
+        
+        // [Authorize(Roles = "Employee")]
+        // [HttpGet("{idnp}")]
+        // public async Task<IActionResult> GetRequests(string idnp)
+        // {
+        //     var response = await _requestService.GetRequests(idnp);
+        //     
+        //     switch (response.StatusCode)
+        //     {
+        //         case HttpStatusCode.BadRequest: return BadRequest(response);
+        //         case HttpStatusCode.InternalServerError: return BadRequest(response);
+        //         case HttpStatusCode.NotFound: return NotFound(response);
+        //         default: return Ok(response.Content);
+        //     }
+        // }
+        
+        // [HttpPatch("{requestId:int}/cancel")]
+        // public async Task CancelRequest(int requestId)
+        // {
+        //     return;
+        // }
+        //
+        // [HttpDelete("{requestId:int}")]
+        // public async Task DeleteRequest(int requestId)
+        // {
+        //     return;
+        // }
     }
 }

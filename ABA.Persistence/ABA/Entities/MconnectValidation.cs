@@ -7,16 +7,12 @@ namespace ABA.Persistence.ABA.Entities
 {
     public partial class MconnectValidation
     {
-        public MconnectValidation()
-        {
-            RequestMconnectValidations = new HashSet<RequestMconnectValidation>();
-        }
-
         public int MconnectValidationId { get; set; }
+        public int RequestId { get; set; }
         public int ValidationTypeId { get; set; }
         public string ValidationValue { get; set; }
 
+        public virtual Request Request { get; set; }
         public virtual ValidationType ValidationType { get; set; }
-        public virtual ICollection<RequestMconnectValidation> RequestMconnectValidations { get; set; }
     }
 }

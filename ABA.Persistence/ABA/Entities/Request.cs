@@ -10,8 +10,8 @@ namespace ABA.Persistence.ABA.Entities
         public Request()
         {
             Licenses = new HashSet<License>();
+            MconnectValidations = new HashSet<MconnectValidation>();
             RequestLocalities = new HashSet<RequestLocality>();
-            RequestMconnectValidations = new HashSet<RequestMconnectValidation>();
             RequestReceivingMethods = new HashSet<RequestReceivingMethod>();
         }
 
@@ -22,15 +22,15 @@ namespace ABA.Persistence.ABA.Entities
         public DateTime EndDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public int StatusId { get; set; }
-        public string Phone { get; set; }
         public string Note { get; set; }
+        public byte NotifyExpiry { get; set; }
 
         public virtual Activity Activity { get; set; }
         public virtual Citizen CitizenIdnpNavigation { get; set; }
         public virtual RequestStatus Status { get; set; }
         public virtual ICollection<License> Licenses { get; set; }
+        public virtual ICollection<MconnectValidation> MconnectValidations { get; set; }
         public virtual ICollection<RequestLocality> RequestLocalities { get; set; }
-        public virtual ICollection<RequestMconnectValidation> RequestMconnectValidations { get; set; }
         public virtual ICollection<RequestReceivingMethod> RequestReceivingMethods { get; set; }
     }
 }
