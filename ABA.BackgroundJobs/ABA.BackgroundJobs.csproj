@@ -11,4 +11,8 @@
         <ProjectReference Include="..\ABA.Utilities\ABA.Utilities.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Hangfire.Core" Version="1.7.22" />
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReceivingMethodDto = ABA.DataTransferObjects.Request.ReceivingMethodDto;
+using ABA.DataTransferObjects.Request;
 
 namespace ABA.DataTransferObjects
 {
@@ -18,7 +18,7 @@ namespace ABA.DataTransferObjects
         public DateTime EndDate { get; set; }
         public string Note { get; set; }
         public byte NotifyExpiry { get; set; }
-        public List<ReceivingMethodDto> ReceivingMethods { get; set; }
+        public List<MappedReceivingMethodDto> ReceivingMethods { get; set; }
         public List<int> Areas { get; set; }
         public List<int> Districts { get; set; }
         public List<int> Localities { get; set; }

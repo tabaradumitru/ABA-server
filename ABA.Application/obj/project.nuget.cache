@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l7qPIWtIcKN/aS84sqMBV/AD+3p1jtd/TDjkC/pj6C15yTb4R70WIj4hKFZ3mYnfxO6blIadkNEur68Rnhe89A==",
+  "dgSpecHash": "45dHNLh6RIQIWfDpf1IU1ZmedUnDi2bMJDb8AOZsO4qnLSworaB9ZQItivKlzRQNYY2d+qma+OTmO1R7XCkd2A==",
   "success": true,
   "projectFilePath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Application\\ABA.Application.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,9 @@
     "C:\\Users\\tabar\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\mysql.data\\8.0.23\\mysql.data.8.0.23.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\mysql.entityframeworkcore\\5.0.0\\mysql.entityframeworkcore.5.0.0.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\nlog\\4.5.0\\nlog.4.5.0.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\r7insight.core\\2.9.3\\r7insight.core.2.9.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\r7insight.nlog\\2.9.3\\r7insight.nlog.2.9.3.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\ssh.net\\2020.0.0-beta1\\ssh.net.2020.0.0-beta1.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\sshnet.security.cryptography\\1.3.0\\sshnet.security.cryptography.1.3.0.nupkg.sha512",
     "C:\\Users\\tabar\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",

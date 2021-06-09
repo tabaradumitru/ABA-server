@@ -40,23 +40,30 @@ namespace ABA.Application.Authentication.Services.Implementations
             var response = new Response<UserDto>();
             // MPass validations
 
-            var dataAfterMPass = new UserData
-            {
-                FirstName = "Dumitru",
-                LastName = "Tabara",
-                Idnp = "2008024014423"
-            };
+            // var dataAfterMPass = new UserData
+            // {
+            //     FirstName = "Dumitru",
+            //     LastName = "Tabara",
+            //     Idnp = "2008024014423"
+            // };
 
             if (isEmployee)
             {
-                var employee = await _abaDbContext.Employees.FindAsync(dataAfterMPass.Idnp);
-
+                var employee = await _abaDbContext.Employees.FindAsync(loginModel.Idnp);
+                
                 if (employee == null)
                 {
                     response.Errors.Add("Utilizatorul nu a putut fi găsit!");
                     response.StatusCode = HttpStatusCode.NotFound;
                     return response;
                 }
+                
+                var dataAfterMPass = new UserData
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Idnp = employee.EmployeeIdnp
+                };
 
                 response.Content = new UserDto
                 {
@@ -66,10 +73,25 @@ namespace ABA.Application.Authentication.Services.Implementations
                     Role = Role.Employee,
                     Token = _tokenService.CreateToken(dataAfterMPass, Role.Employee)
                 };
-                // check local database for employee
             }
             else
             {
+                var citizen = await _abaDbContext.Citizens.FindAsync(loginModel.Idnp);
+                
+                if (citizen == null)
+                {
+                    response.Errors.Add("Utilizatorul nu a putut fi găsit!");
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    return response;
+                }
+                
+                var dataAfterMPass = new UserData
+                {
+                    FirstName = citizen.FirstName,
+                    LastName = citizen.LastName,
+                    Idnp = citizen.CitizenIdnp
+                };
+
                 response.Content = new UserDto
                 {
                     Idnp = dataAfterMPass.Idnp,

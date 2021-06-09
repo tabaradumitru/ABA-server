@@ -2,6 +2,6 @@
 {
     public interface IFilter
     {
-        string Keyword { get; set; }
+        public string Keyword { get; set; }
     }
 }

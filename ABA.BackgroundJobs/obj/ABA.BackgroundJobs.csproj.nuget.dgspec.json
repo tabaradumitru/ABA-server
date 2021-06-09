@@ -143,6 +143,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.7.22, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -391,6 +397,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "R7Insight.NLog": {
+              "target": "Package",
+              "version": "[2.9.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

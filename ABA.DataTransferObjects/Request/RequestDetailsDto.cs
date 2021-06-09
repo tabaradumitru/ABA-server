@@ -4,7 +4,7 @@ namespace ABA.DataTransferObjects.Request
 {
     public class RequestDetailsDto
     {
-        public List<ReceivingMethodDto> ReceivingMethods { get; set; }
+        public List<MappedReceivingMethodDto> ReceivingMethods { get; set; }
         public byte NotifyExpiry { get; set; }
         public string Email { get; set; }
         public bool PersonalDataAgreement { get; set; }

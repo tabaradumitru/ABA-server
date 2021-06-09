@@ -1,6 +1,6 @@
 ﻿namespace ABA.DataTransferObjects.Request
 {
-    public class ReceivingMethodDto
+    public class MappedReceivingMethodDto
     {
         public int ReceivingMethodId { get; set; }
         public string ReceivingMethodName { get; set; }

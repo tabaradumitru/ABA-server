@@ -13,5 +13,6 @@ namespace ABA.Application.License.Services
         Task<Response<LicenseDto>> GetLicense(int licenseId);
         Task<Response<LicenseIdDto>> CreateLicense(int requestId, string employeeIdnp);
         Task<List<LicenseStatusDto>> GetLicenseStatuses();
+        Task UpdateLicensesStatuses();
     }
 }

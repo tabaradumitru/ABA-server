@@ -11,7 +11,8 @@
           "ABA.Application": "1.0.0",
           "ABA.DataTransferObjects": "1.0.0",
           "ABA.Models": "1.0.0",
-          "ABA.Utilities": "1.0.0"
+          "ABA.Utilities": "1.0.0",
+          "Hangfire.Core": "1.7.22"
         },
         "runtime": {
           "ABA.BackgroundJobs.dll": {}
@@ -45,6 +46,55 @@
           "lib/netstandard2.0/Google.Protobuf.dll": {
             "assemblyVersion": "3.11.4.0",
             "fileVersion": "3.11.4.0"
+          }
+        }
+      },
+      "Hangfire.Core/1.7.22": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.Core.dll": {
+            "assemblyVersion": "1.7.22.0",
+            "fileVersion": "1.7.22.0"
+          }
+        },
+        "resources": {
+          "lib/netstandard2.0/ca/Hangfire.Core.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/netstandard2.0/de/Hangfire.Core.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.0/es/Hangfire.Core.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.0/fa/Hangfire.Core.resources.dll": {
+            "locale": "fa"
+          },
+          "lib/netstandard2.0/fr/Hangfire.Core.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.0/nb/Hangfire.Core.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/netstandard2.0/nl/Hangfire.Core.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/netstandard2.0/pt-BR/Hangfire.Core.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netstandard2.0/pt-PT/Hangfire.Core.resources.dll": {
+            "locale": "pt-PT"
+          },
+          "lib/netstandard2.0/pt/Hangfire.Core.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/netstandard2.0/zh-TW/Hangfire.Core.resources.dll": {
+            "locale": "zh-TW"
+          },
+          "lib/netstandard2.0/zh/Hangfire.Core.resources.dll": {
+            "locale": "zh"
           }
         }
       },
@@ -369,6 +419,42 @@
           }
         }
       },
+      "Newtonsoft.Json/11.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.1.21818"
+          }
+        }
+      },
+      "NLog/4.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.5.0.7357"
+          }
+        }
+      },
+      "R7Insight.Core/2.9.3": {
+        "runtime": {
+          "lib/netstandard2.0/R7Insight.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "R7Insight.NLog/2.9.3": {
+        "dependencies": {
+          "NLog": "4.5.0",
+          "R7Insight.Core": "2.9.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/R7Insight.NLog.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "SSH.NET/2020.0.0-beta1": {
         "dependencies": {
           "SshNet.Security.Cryptography": "1.3.0"
@@ -548,6 +634,9 @@
         }
       },
       "ABA.Utilities/1.0.0": {
+        "dependencies": {
+          "R7Insight.NLog": "2.9.3"
+        },
         "runtime": {
           "ABA.Utilities.dll": {}
         }
@@ -580,6 +669,13 @@
       "sha512": "sha512-dajCxjDCiPyZuqwZCkFJTwhn/0TJ5VesIs4fXvs56ez1VUi68JjhYMMsPjnJ9gcPqJwTMtXMU1WqUdXYiG1x4w==",
       "path": "google.protobuf/3.11.4",
       "hashPath": "google.protobuf.3.11.4.nupkg.sha512"
+    },
+    "Hangfire.Core/1.7.22": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-f8fm18BN+hBgq9ZFT8JVLnqU2dtgg1HNFFqth3P4MCwRjhqrQhliMY5bbkK51Dxkf8yVfNT9spFsuXztXno+8Q==",
+      "path": "hangfire.core/1.7.22",
+      "hashPath": "hangfire.core.1.7.22.nupkg.sha512"
     },
     "K4os.Compression.LZ4/1.1.11": {
       "type": "package",
@@ -783,6 +879,34 @@
       "sha512": "sha512-1oa4T5poCKEbKczGWNT2vKjsaqDvRXhg9Hwzu7XLWvWrKNbyj6yUsAIBnl49Hs1mTaGHDJjoAHTbbvNPDEnhGg==",
       "path": "mysql.entityframeworkcore/5.0.0",
       "hashPath": "mysql.entityframeworkcore.5.0.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/11.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pNN4l+J6LlpIvHOeNdXlwxv39NPJ2B5klz+Rd2UQZIx30Squ5oND1Yy3wEAUoKn0GPUj6Yxt9lxlYWQqfZcvKg==",
+      "path": "newtonsoft.json/11.0.1",
+      "hashPath": "newtonsoft.json.11.0.1.nupkg.sha512"
+    },
+    "NLog/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lzqhWWkcC2HplWKsT3Rv81O7WbMt0xr0ICnCGqTgiSkqbnRxL8tTDGL0WRK7+sFZnZ/GQThkQcjSymhcbz05/w==",
+      "path": "nlog/4.5.0",
+      "hashPath": "nlog.4.5.0.nupkg.sha512"
+    },
+    "R7Insight.Core/2.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XXtYA5rgSR0wNMyERNZVgsE1l+YzgMTR7Uq9CMOl3h2Jigr6KdtYAAlVKk1yRSMnttJ/881W6cf19Hwfv7/0+g==",
+      "path": "r7insight.core/2.9.3",
+      "hashPath": "r7insight.core.2.9.3.nupkg.sha512"
+    },
+    "R7Insight.NLog/2.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-drSH7ijF5aXaxhR5t/4e5i76e3J6HIguJsqh/QULMtvkpADW7HeDBx1x96dvEQGUGQ5v/lAwbxUM0b4E19Z17A==",
+      "path": "r7insight.nlog/2.9.3",
+      "hashPath": "r7insight.nlog.2.9.3.nupkg.sha512"
     },
     "SSH.NET/2020.0.0-beta1": {
       "type": "package",

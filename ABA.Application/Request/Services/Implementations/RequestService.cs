@@ -69,7 +69,7 @@ namespace ABA.Application.Request.Services.Implementations
                     Note = r.Note,
                     NotifyExpiry = r.NotifyExpiry,
                     ReceivingMethods = r.RequestReceivingMethods
-                        .Select(rrm => new ReceivingMethodDto
+                        .Select(rrm => new MappedReceivingMethodDto
                         {
                             ReceivingMethodId = rrm.ReceivingMethodId,
                             ReceivingMethodName = rrm.ReceivingMethod.ReceivingMethodName,
@@ -186,6 +186,14 @@ namespace ABA.Application.Request.Services.Implementations
                 .Select(r => new RequestDto
                 {
                     RequestId = r.RequestId,
+                    LicenseId = r.Licenses
+                        .Where(l => l.RequestId == r.RequestId)
+                        .Select(l => l.LicenseId)
+                        .FirstOrDefault(),
+                    LicenseNumber = r.Licenses
+                        .Where(l => l.RequestId == r.RequestId)
+                        .Select(l => l.LicenseNumber)
+                        .FirstOrDefault(),
                     CitizenIdnp = r.CitizenIdnp,
                     ActivityId = r.ActivityId,
                     StartDate = r.StartDate,
@@ -194,7 +202,7 @@ namespace ABA.Application.Request.Services.Implementations
                     StatusId = r.StatusId,
                     Note = r.Note,
                     ReceivingMethods = r.RequestReceivingMethods
-                        .Select(rrm => new ReceivingMethodDto
+                        .Select(rrm => new MappedReceivingMethodDto
                         {
                             ReceivingMethodId = rrm.ReceivingMethodId,
                             ReceivingMethodName = rrm.ReceivingMethod.ReceivingMethodName,
@@ -250,7 +258,7 @@ namespace ABA.Application.Request.Services.Implementations
                     NotifyExpiry = r.NotifyExpiry,
                     Note = r.Note,
                     ReceivingMethods = r.RequestReceivingMethods
-                        .Select(rrm => new ReceivingMethodDto
+                        .Select(rrm => new MappedReceivingMethodDto
                         {
                             ReceivingMethodId = rrm.ReceivingMethodId,
                             ReceivingMethodName = rrm.ReceivingMethod.ReceivingMethodName,
@@ -396,6 +404,7 @@ namespace ABA.Application.Request.Services.Implementations
         private IQueryable<Persistence.ABA.Entities.Request> GetRequestsQuery()
         {
             return _abaDbContext.Requests
+                .Include(r => r.Licenses)
                 .Include(r => r.CitizenIdnpNavigation)
                 .Include(r => r.RequestReceivingMethods)
                     .ThenInclude(rm => rm.ReceivingMethod)
@@ -410,6 +419,33 @@ namespace ABA.Application.Request.Services.Implementations
         {
             if (!string.IsNullOrWhiteSpace(filter.CitizenIdnp))
                 query = query.Where(q => EF.Functions.Like(q.CitizenIdnp, $"%{filter.CitizenIdnp}%"));
+
+            if (filter.ActivityId.HasValue)
+                query = query.Where(q => q.ActivityId == filter.ActivityId);
+
+            if (filter.StatusId.HasValue)
+                query = query.Where(q => q.StatusId == filter.StatusId);
+            
+            // TODO: filter localities
+            if (!string.IsNullOrWhiteSpace(filter.LocalityName))
+            {
+                query = query.Where(q =>
+                    q.RequestLocalities.Any(ll =>
+                        EF.Functions.Like(ll.Locality.LocalityName, $"%{filter.LocalityName}%")) ||
+                    q.RequestLocalities.Any(ll =>
+                        EF.Functions.Like(ll.Locality.District.DistrictName, $"%{filter.LocalityName}%")) ||
+                    q.RequestLocalities.Any(ll =>
+                        EF.Functions.Like(ll.Locality.District.Area.AreaName, $"%{filter.LocalityName}%")));
+            }
+
+            if (filter.CreatedAt != DateTime.MinValue)
+                query = query.Where(q => q.CreatedAt.Date == filter.CreatedAt.Date);
+            
+            if (filter.StartDate != DateTime.MinValue)
+                query = query.Where(q => q.StartDate.Date == filter.StartDate.Date);
+            
+            if (filter.EndDate != DateTime.MinValue)
+                query = query.Where(q => q.EndDate.Date == filter.EndDate.Date);
         }
 
         private void ApplyOrderBy(ref IQueryable<Persistence.ABA.Entities.Request> query, RequestFilterDto filter)
@@ -447,7 +483,9 @@ namespace ABA.Application.Request.Services.Implementations
                     break;
                 
                 default:
-                    query = query.OrderByDescending(x => x.CreatedAt);
+                    query = query
+                        .OrderBy(x => x.StatusId)
+                        .ThenByDescending(x => x.StartDate);
                     break;
             }
         }

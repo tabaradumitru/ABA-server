@@ -5,6 +5,8 @@ namespace ABA.DataTransferObjects.Request
     public class RequestDto: RequestDetailsDto
     {
         public int? RequestId { get; set; }
+        public int? LicenseId { get; set; }
+        public string LicenseNumber { get; set; }
         public string CitizenIdnp { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

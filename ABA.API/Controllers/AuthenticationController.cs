@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using ABA.Application.Authentication.Services;
 using ABA.DataTransferObjects.Authentication;
 using ABA.Models.Wrappers;
@@ -19,15 +20,31 @@ namespace ABA.API.Controllers
         }
 
         [HttpPost("login/two-step-auth")]
-        public async Task<Response<UserDto>> TwoStepAuthLogin(TwoStepAuthModel loginModel)
+        public async Task<IActionResult> TwoStepAuthLogin(TwoStepAuthModel loginModel)
         {
-            return await _authenticationService.TwoStepLogin(loginModel, false);
+            var response = await _authenticationService.TwoStepLogin(loginModel, false);
+            
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.BadRequest: return BadRequest(response);
+                case HttpStatusCode.InternalServerError: return BadRequest(response);
+                case HttpStatusCode.NotFound: return NotFound(response);
+                default: return Ok(response.Content);
+            }
         }
         
         [HttpPost("login/two-step-auth/employee")]
-        public async Task<Response<UserDto>> TwoStepAuthLoginEmployee(TwoStepAuthModel loginModel)
+        public async Task<IActionResult> TwoStepAuthLoginEmployee(TwoStepAuthModel loginModel)
         {
-            return await _authenticationService.TwoStepLogin(loginModel, true);
+            var response = await _authenticationService.TwoStepLogin(loginModel, true);
+            
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.BadRequest: return BadRequest(response);
+                case HttpStatusCode.InternalServerError: return BadRequest(response);
+                case HttpStatusCode.NotFound: return NotFound(response);
+                default: return Ok(response.Content);
+            }
         }
 
         [HttpGet("random")]

@@ -7,12 +7,12 @@ using ABA.DataTransferObjects;
 using ABA.DataTransferObjects.License;
 using ABA.DataTransferObjects.Request;
 using ABA.Models.Wrappers;
+using ABA.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ABA.API.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class LicensesController: ControllerBase
@@ -23,6 +23,14 @@ namespace ABA.API.Controllers
         {
             _licenseService = licenseService;
         }
+
+        // [HttpPost("send-message")]
+        // public async Task SendSMS()
+        // {
+        //     var smsService = new SmsService();
+        //
+        //     await smsService.Send(79335566, "Numarul permisului de identificare este PA-000000023! Numarul permisului de identificare este PA-000000023! Numarul permisului de identificare este PA-000000023! Numarul permisului de identificare este PA-000000023!");
+        // }
 
         #region Employee Endpoints
 
@@ -53,7 +61,7 @@ namespace ABA.API.Controllers
         #endregion
         
         #region User Endpoints
-
+        
         [Authorize(Roles = "User")]
         [HttpGet]
         public PaginatedResponse<List<LicenseDto>> GetUserLicenses([FromQuery] LicenseFilterDto filter)
@@ -62,7 +70,7 @@ namespace ABA.API.Controllers
 
             return _licenseService.GetUserLicenses(filter);
         }
-
+        
         [Authorize(Roles = "User")]
         [HttpGet("{licenseId:int}")]
         public async Task<IActionResult> GetLicense(int licenseId)

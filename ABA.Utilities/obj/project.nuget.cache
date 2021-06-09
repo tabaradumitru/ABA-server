@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "nG3jL3MJqA9QbMrPK2wqJu4QjWmaetDSqXb74e4Vvr3eSzlcUvqDYU6EBnwnsrhk6DtzmvdW0rbVIHWBhl5NOA==",
+  "dgSpecHash": "bk+7sLC6ao5xFU1NfyRNe9LySL2RTDaDZMkF+QDZHdB+en6SycyiVVPk8dOs+34qABFVyzZvNQdIukxWXc4DSQ==",
   "success": true,
   "projectFilePath": "D:\\university\\ProiectLicenta\\ABA\\ABA-server\\ABA.Utilities\\ABA.Utilities.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\tabar\\.nuget\\packages\\nlog\\4.5.0\\nlog.4.5.0.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\r7insight.core\\2.9.3\\r7insight.core.2.9.3.nupkg.sha512",
+    "C:\\Users\\tabar\\.nuget\\packages\\r7insight.nlog\\2.9.3\\r7insight.nlog.2.9.3.nupkg.sha512"
+  ],
   "logs": []
 }

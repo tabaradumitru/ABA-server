@@ -37,7 +37,7 @@ namespace ABA.Application.Authentication.Services.Implementations
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(500),
+                Expires = DateTime.Now.AddHours(24),
                 SigningCredentials = creds,
                 Issuer = _authConfig.Issuer,
                 Audience = _authConfig.Audience
@@ -49,5 +49,6 @@ namespace ABA.Application.Authentication.Services.Implementations
             
             return tokenHandler.WriteToken(token);
         }
+        
     }
 }
