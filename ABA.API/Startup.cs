@@ -43,7 +43,6 @@ namespace ABA.API
             });
             
             services.Configure<AuthorizationConfiguration>(Configuration.GetSection("Authorization"));
-
             services.AddServices();
             services.AddHttpContextAccessor();
 

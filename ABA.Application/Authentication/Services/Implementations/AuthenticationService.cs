@@ -38,14 +38,6 @@ namespace ABA.Application.Authentication.Services.Implementations
         public async Task<Response<UserDto>> TwoStepLogin(TwoStepAuthModel loginModel, bool isEmployee)
         {
             var response = new Response<UserDto>();
-            // MPass validations
-
-            // var dataAfterMPass = new UserData
-            // {
-            //     FirstName = "Dumitru",
-            //     LastName = "Tabara",
-            //     Idnp = "2008024014423"
-            // };
 
             if (isEmployee)
             {
